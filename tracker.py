@@ -53,7 +53,7 @@ class Tracker:
                 continue
             points = np.hstack(obj.track).astype(np.int32).reshape((-1, 1, 2))
             color = self.colors[obj.track_id]
-            cv2.polylines(frame, [points], isClosed=False, color=color, thickness=2)
+            # cv2.polylines(frame, [points], isClosed=False, color=color, thickness=2)
         return frame
 
     def count_valid(self, label):

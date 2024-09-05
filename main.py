@@ -24,16 +24,38 @@ def main(filename, nopreview, height):
     cap = cv2.VideoCapture(filename=filename)
     total_frames = int(cap.get(cv2.CAP_PROP_FRAME_COUNT))
     roi = None
+    
+    # Define the target resolution (example: width=1280, height=720)
+    target_width = 1280
+    target_height = 720
+
+    count = 0 ## gambi, tirar depois
 
     with tqdm(total=total_frames) as progress:
         while cap.isOpened:
             ret, frame = cap.read()
+            count += 1
+            if count % 3 != 0:
+                continue
             if not ret:
                 break
 
-            if height:
-                scale = height / frame.shape[0]
-                frame = cv2.resize(frame, (0, 0), fx=scale, fy=scale)
+
+            # Get original frame dimensions
+            original_height, original_width = frame.shape[:2]
+
+            # Resize the frame if it's larger than the target resolution
+            if original_width > target_width or original_height > target_height:
+                scale_width = target_width / original_width
+                scale_height = target_height / original_height
+                scale = min(scale_width, scale_height)  # Maintain aspect ratio
+                new_dimensions = (int(original_width * scale), int(original_height * scale))
+                
+                frame = cv2.resize(frame, new_dimensions, interpolation=cv2.INTER_AREA)
+
+            # if height:
+            #     scale = height / frame.shape[0]
+            #     frame = cv2.resize(frame, (0, 0), fx=scale, fy=scale)
 
             frame_height, frame_width, _ = frame.shape
             objects = detector.detect(frame)

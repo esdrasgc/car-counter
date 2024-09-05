@@ -131,6 +131,11 @@ venv/
 ENV/
 env.bak/
 venv.bak/
+env_counter/
+
+data/baluarte.mp4
+data/estacionamento.mp4
+data/quata_uberabinha.mp4
 
 # Spyder project settings
 .spyderproject

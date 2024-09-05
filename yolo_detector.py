@@ -108,5 +108,5 @@ class ObjectDetector:
                 label = CLASS_NAMES[int(cls)]
                 if label in ("person", "bicycle", "car", "motorbike", "truck", "bus"):
                     x1, y1, x2, y2 = [int(v) for v in box.xyxy[0]]
-                    cars.append(DetectedObject(x1, y1, x2 - x1, y2 - y1, int(box.id), label))
+                    cars.append(DetectedObject(x1, y1, x2 - x1, y2 - y1, box.id, label))
         return cars
